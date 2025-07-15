@@ -1,9 +1,10 @@
 import re
-from langchain_community.chat_models import ChatOpenAI
+
 from nodes.state_agent import AgentState
 from nodes.stopper_node import make_decision
+from langchain_openai import ChatOpenAI
 
-llm = ChatOpenAI(model="gpt-4.1-mini-2025-04-14", temperature=0)
+llm = ChatOpenAI(model="gpt-4.1-mini-2025-04-14", temperature=0.2)
 
 def trim_quoted_text(s):
     match = re.search(r'\[(.*?)\]', s)
@@ -37,7 +38,7 @@ def planner_node(state: AgentState) -> AgentState:
         "If you need more information, provide ONE concise search term (1-3 words).\n"
         "Examples: 'photosynthesis', 'Leo Messi', 'American Shorthair'\n\n"
         "the search term should be inside a brackets:  [search term] "
-        
+        "All questions should be answered before you stop"
         "Focus on what specific information is missing and provide the most relevant search term."
     )
 

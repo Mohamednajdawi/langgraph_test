@@ -12,7 +12,7 @@ def make_decision(state: AgentState, planner_response: str) -> str:
     research_entries = [entry for entry in state.memory if entry.startswith("Researcher found:")]
     
     # Auto-stop conditions
-    if len(research_entries) >= 5:
+    if len(research_entries) >= 7:
         print("🛑🛑 Auto-stopping: Gathered sufficient information (5+ research results)")
         return "summarize"
     
@@ -28,5 +28,9 @@ def make_decision(state: AgentState, planner_response: str) -> str:
     return "research"
 
 def planner_decision(state: AgentState) -> str:
+    """Decision function for conditional edges"""
+    return state.decision
+
+def examiner_decision(state: AgentState) -> str:
     """Decision function for conditional edges"""
     return state.decision

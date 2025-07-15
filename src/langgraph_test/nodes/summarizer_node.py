@@ -1,5 +1,5 @@
-from langchain_community.chat_models import ChatOpenAI
 
+from langchain_openai import ChatOpenAI
 from .state_agent import AgentState
 
 llm = ChatOpenAI(model="gpt-4.1-mini-2025-04-14", temperature=0)

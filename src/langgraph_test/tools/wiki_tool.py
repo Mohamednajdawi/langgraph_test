@@ -8,5 +8,5 @@ wiki = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper(top_k_results=3, lang="
 @tool
 def wiki_search(query: str) -> str:
     """Search Wikipedia for a given query."""
-    result = wiki.run(query)
+    result = wiki.invoke(query)
     return result
