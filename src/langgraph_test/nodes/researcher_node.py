@@ -4,7 +4,6 @@ from .state_agent import AgentState
 
 
 def researcher_node(state: AgentState) -> AgentState:
-    print(f"Researcher: {state.next_action}")
     search_term = state.next_action.strip()
     result = wiki_search(search_term)
     if "No relevant result" in result:

@@ -1,5 +1,6 @@
-from langchain.tools import WikipediaQueryRun, tool
-from langchain.utilities import WikipediaAPIWrapper
+from langchain_community.tools import WikipediaQueryRun
+from langchain_community.utilities import WikipediaAPIWrapper
+from langchain.tools import tool
 
 wiki = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper(top_k_results=3, lang="en"))
 

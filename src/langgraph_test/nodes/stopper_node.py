@@ -12,11 +12,19 @@ def make_decision(state: AgentState, planner_response: str) -> str:
     research_entries = [entry for entry in state.memory if entry.startswith("Researcher found:")]
     
     # Auto-stop conditions
-    if len(research_entries) >= 3 or len(state.memory) > 12 or state.failed_attempts >= 3:
-        print("🛑 Auto-stopping: Gathered sufficient information (3+ research results) or maximum iterations reached or too many failed attempts")
+    if len(research_entries) >= 5:
+        print("🛑🛑 Auto-stopping: Gathered sufficient information (5+ research results)")
         return "summarize"
     
-    print("📚 Continuing research...")
+    if len(state.memory) > 12:
+        print("🛑🛑🛑 Auto-stopping: Gathered sufficient information (12+ research results)")
+        return "summarize"
+    
+    if state.failed_attempts >= 3:
+        print("🛑🛑🛑🛑 Auto-stopping: Too many failed attempts")
+        return "summarize"
+    
+    # print("📚 Continuing research...")
     return "research"
 
 def planner_decision(state: AgentState) -> str:

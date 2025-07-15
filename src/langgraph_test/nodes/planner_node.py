@@ -1,36 +1,57 @@
-from langchain.chat_models import ChatOpenAI
+import re
+from langchain_community.chat_models import ChatOpenAI
 from nodes.state_agent import AgentState
 from nodes.stopper_node import make_decision
 
 llm = ChatOpenAI(model="gpt-4.1-mini-2025-04-14", temperature=0)
 
+def trim_quoted_text(s):
+    match = re.search(r'\[(.*?)\]', s)
+    return match.group(1) if match else s
+
 def planner_node(state: AgentState) -> AgentState:
     research_entries = [entry for entry in state.memory if entry.startswith("Researcher found:")]
     
     prompt = (
-        f"You are planning how to complete this task: '{state.task}'.\n"
-        f"Here is what you've gathered so far:\n{state.memory}\n\n"
-        f"You have gathered {len(research_entries)} pieces of information.\n\n"
-        "IMPORTANT: If you have gathered 3 or more pieces of research information, "
-        "or if the information already covers the basic concepts of the task "
-        "reply with exactly: 'STOP'\n\n"
-        "If you need more specific information, provide a SHORT search term (1-3 words). "
-        "Examples: 'photosynthesis', 'Leo Messi', 'shakira', 'american shorthair'"
-        "Assest the task and only use research task if you need more information"
-        "If 2 or more tasks is asked, you should break down the task into smaller tasks"
-        "For example, if the task is 'What is the capital of France and what is the languge in Jordan?',"
-        "and you have gathered information about the country, you should break down the task into "
-        "'capital of France?'in one research and then another task 'language in Jordan?' provive one search term at a time"
+        f"You are planning how to complete this task: '{state.task}'\n\n"
+        
+        f"Current research gathered:\n{state.memory}\n\n"
+        
+        f"Research status: {len(research_entries)} pieces of information collected.\n\n"
+        
+        "STOPPING CONDITIONS:\n"
+        "Reply with exactly 'STOP' if ANY of these conditions are met:\n"
+        "- You have gathered 3 or more pieces of research information\n"
+        "- The existing information sufficiently covers the basic concepts needed for the task\n"
+        "- You have enough information to complete the task\n\n"
+        
+        "TASK BREAKDOWN:\n"
+        "If the task contains multiple questions or components:\n"
+        "- Break it down into smaller, focused subtasks\n"
+        "- Handle one subtask at a time\n"
+        "- Example: 'What is the capital of France and what language is spoken in Jordan?'\n"
+        "  → First research: 'capital France'\n"
+        "  → Second research: 'language Jordan'\n\n"
+        "Always check the Current research "
+        "SEARCH INSTRUCTIONS:\n"
+        "If you need more information, provide ONE concise search term (1-3 words).\n"
+        "Examples: 'photosynthesis', 'Leo Messi', 'American Shorthair'\n\n"
+        "the search term should be inside a brackets:  [search term] "
+        
+        "Focus on what specific information is missing and provide the most relevant search term."
     )
+
     response = llm.invoke(prompt)
+    trim_research_term = trim_quoted_text(response.content)
+    print(f"Planner response: {trim_research_term}")
     
     # Decision logic - determine next step
-    decision = make_decision(state, response.content)
+    decision = make_decision(state, trim_research_term)
     
     updated_state = AgentState(
         task=state.task,
-        memory=state.memory + [f"Planner: {response.content}"],
-        next_action=response.content,
+        memory=state.memory + [f"Planner: {trim_research_term}"],
+        next_action=trim_research_term,
         failed_attempts=state.failed_attempts,
         decision=decision
     )
