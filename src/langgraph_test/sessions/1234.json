@@ -1,0 +1,17 @@
+[
+  {
+    "query": "where did messi born",
+    "summary": "The provided research data does not contain information about where Lionel Messi was born.",
+    "timestamp": "2025-07-15T16:29:54.033647"
+  },
+  {
+    "query": "what is the capital of Slovakia",
+    "summary": "The capital of Slovakia is Bratislava. It is the largest city in the country and serves as the political, cultural, and economic center of Slovakia. Located in southwestern Slovakia along the Danube River, Bratislava borders Austria and Hungary, making it the only national capital to border two sovereign states. The city hosts the Slovak president, parliament, and executive offices, and is home to several universities, museums, theatres, and major business headquarters. Historically, Bratislava was the coronation site and legislative center of the Kingdom of Hungary from 1536 to 1783. Today, it is the wealthiest region in Slovakia by GDP per capita and attracts around one million tourists annually.",
+    "timestamp": "2025-07-15T16:31:33.327265"
+  },
+  {
+    "query": "translate in german the conversation",
+    "summary": "The phrase \"translate in German the conversation\" can be rendered as \"\u00fcbersetze das Gespr\u00e4ch ins Deutsche.\" This translation captures the imperative form of \"translate,\" the noun \"conversation\" as \"Gespr\u00e4ch,\" and the direction \"into German\" as \"ins Deutsche.\" \n\nKey points:\n- \"Translate\" = \"\u00fcbersetzen\" (imperative: \"\u00fcbersetze\")\n- \"Conversation\" = \"Gespr\u00e4ch\"\n- \"In German\" = \"ins Deutsche\" (prepositional phrase indicating direction)\n\nThus, the full instruction is: **\"\u00dcbersetze das Gespr\u00e4ch ins Deutsche.\"**",
+    "timestamp": "2025-07-15T16:32:33.982887"
+  }
+]

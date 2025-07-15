@@ -1,7 +1,7 @@
 import re
 
 from nodes.state_agent import AgentState
-from langchain_openai import ChatOpenAI
+from langchain.chat_models import ChatOpenAI
 
 llm = ChatOpenAI(model="gpt-4.1-mini-2025-04-14", temperature=0.2)
 

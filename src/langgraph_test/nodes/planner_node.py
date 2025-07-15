@@ -2,7 +2,7 @@ import re
 
 from nodes.state_agent import AgentState
 from nodes.stopper_node import make_decision
-from langchain_openai import ChatOpenAI
+from langchain.chat_models import ChatOpenAI
 
 llm = ChatOpenAI(model="gpt-4.1-mini-2025-04-14", temperature=0.2)
 
@@ -13,8 +13,18 @@ def trim_quoted_text(s):
 def planner_node(state: AgentState) -> AgentState:
     research_entries = [entry for entry in state.memory if entry.startswith("Researcher found:")]
     
+    # Build conversation context
+    conversation_context = ""
+    if state.conversation_history:
+        conversation_context = "\nCONVERSATION HISTORY:\n"
+        for i, entry in enumerate(state.conversation_history[-3:], 1):  # Show last 3 conversations
+            conversation_context += f"{i}. Q: {entry.query}\n   A: {entry.summary[:100]}{'...' if len(entry.summary) > 100 else ''}\n"
+        conversation_context += "\nUse this context to understand follow-up questions or related queries.\n\n"
+    
     prompt = (
         f"You are planning how to complete this task: '{state.task}'\n\n"
+        
+        f"{conversation_context}"
         
         f"Current research gathered:\n{state.memory}\n\n"
         
@@ -24,7 +34,8 @@ def planner_node(state: AgentState) -> AgentState:
         "Reply with exactly 'STOP' if ANY of these conditions are met:\n"
         "- You have gathered 3 or more pieces of research information\n"
         "- The existing information sufficiently covers the basic concepts needed for the task\n"
-        "- You have enough information to complete the task\n\n"
+        "- You have enough information to complete the task\n"
+        "- The question can be answered from conversation history (avoid duplicate research)\n\n"
         
         "TASK BREAKDOWN:\n"
         "If the task contains multiple questions or components:\n"
