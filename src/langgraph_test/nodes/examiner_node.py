@@ -11,6 +11,8 @@ def examiner_node(state: AgentState) -> AgentState:
         f"Task: {state.task}\n\n"
         f"Summary: {state.memory}\n\n"
         "return 'correct' if the summary is correct, otherwise return 'planner' to replan and research the task again"
+        "if the summary include (not specified in the research) return 'planner'"
+        "otherwise return 'correct'"
     )
     response = llm.invoke(prompt)
     response_content = response.content

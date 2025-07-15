@@ -13,6 +13,7 @@ def summarizer_node(state: AgentState) -> AgentState:
         f"Research data:\n{research_data}\n\n"
         "Please synthesize this information into a comprehensive but concise answer. "
         "Focus on the key concepts and processes. Keep it under 200 words."
+        "Do not include any information that was not found in the research"
     )
     
     response = llm.invoke(prompt)
