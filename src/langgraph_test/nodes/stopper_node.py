@@ -24,6 +24,10 @@ def make_decision(state: AgentState, planner_response: str) -> str:
         print("🛑🛑🛑🛑 Auto-stopping: Too many failed attempts")
         return "summarize"
     
+    if "check_history" in planner_response.lower():
+        print("--- Auto-stopping: Check history")
+        return "history"
+    
     # print("📚 Continuing research...")
     return "research"
 

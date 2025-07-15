@@ -1,8 +1,8 @@
 import re
 
+from langchain.chat_models import ChatOpenAI
 from nodes.state_agent import AgentState
 from nodes.stopper_node import make_decision
-from langchain.chat_models import ChatOpenAI
 
 llm = ChatOpenAI(model="gpt-4.1-mini-2025-04-14", temperature=0.2)
 
@@ -51,6 +51,7 @@ def planner_node(state: AgentState) -> AgentState:
         "the search term should be inside a brackets:  [search term] "
         "All questions should be answered before you stop"
         "Focus on what specific information is missing and provide the most relevant search term."
+        "if the task is about something in the conversation history, you should reply with 'check_history'"
     )
 
     response = llm.invoke(prompt)
@@ -65,7 +66,9 @@ def planner_node(state: AgentState) -> AgentState:
         memory=state.memory + [f"Planner: {trim_research_term}"],
         next_action=trim_research_term,
         failed_attempts=state.failed_attempts,
-        decision=decision
+        decision=decision,
+        conversation_history=state.conversation_history,
+        session_id=state.session_id
     )
     print(f"Planner decision: {decision}")
 

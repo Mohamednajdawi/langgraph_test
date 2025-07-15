@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "LangGraph FastAPI (Direct)",
+            "name": "LangGraph FastAPI",
             "type": "debugpy",
             "request": "launch",
-            "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+            "python": "${workspaceFolder}/.venv/bin/python",
             "cwd": "${workspaceFolder}/src/langgraph_test",
             "program": "${workspaceFolder}/src/langgraph_test/app.py",
             "jinja": true
