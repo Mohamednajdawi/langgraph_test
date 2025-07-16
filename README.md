@@ -106,18 +106,8 @@ history = response.json()["history"]
 
 ## Agent Workflow
 
-```mermaid
-graph TD
-    A[User Query] --> B[Planner Node]
-    B --> C{Need Research?}
-    C -->|Yes| D[Research Node]
-    C -->|No| E[Summarizer Node]
-    D --> B
-    E --> F[Examiner Node]
-    F --> G{Answer Good?}
-    G -->|No| B
-    G -->|Yes| H[Return Response]
-```
+ 
+![alt text](image.png "Title")
 
 ## Configuration
 
