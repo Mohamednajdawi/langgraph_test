@@ -1,6 +1,6 @@
+from typing import List, Optional
 
 from pydantic import BaseModel
-from typing import List, Dict, Optional
 
 
 class ConversationEntry(BaseModel):
@@ -17,4 +17,4 @@ class AgentState(BaseModel):
     decision: str
     conversation_history: List[ConversationEntry] = []
     session_id: Optional[str] = None
-
+    current_state: str = "just started"

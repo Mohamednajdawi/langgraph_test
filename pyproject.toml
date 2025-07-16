@@ -6,6 +6,10 @@ readme = "README.md"
 authors = [
     { name = "Mohamednajdawi", email = "32543467+Mohamednajdawi@users.noreply.github.com" }
 ]
+
+packages = [{ include = "langgraph_test", from = "src" }]                                                                    # insert name 
+package-mode = true
+
 requires-python = ">=3.12"
 dependencies = [
     "langchain-community>=0.3.27",
@@ -17,4 +21,6 @@ dependencies = [
     "fastapi>=0.104.1",
     "uvicorn>=0.24.0",
     "langchain-openai>=0.3.28",
+    "ipython>=9.4.0",
+    "ipykernel>=6.29.5",
 ]

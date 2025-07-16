@@ -3,6 +3,7 @@ from nodes.state_agent import AgentState
 
 llm = ChatOpenAI(model="gpt-4.1-mini-2025-04-14", temperature=0.2)
 
+
 def history_node(state: AgentState) -> AgentState:
     prompt = f"""
     You are a helpful assistant that can answer questions about the conversation history.
@@ -19,6 +20,7 @@ def history_node(state: AgentState) -> AgentState:
         failed_attempts=state.failed_attempts,
         decision=state.decision,
         conversation_history=state.conversation_history,
-        session_id=state.session_id
+        session_id=state.session_id,
+        current_state="history was checked",
     )
     return updated_state

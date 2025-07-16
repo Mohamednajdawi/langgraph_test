@@ -1,9 +1,8 @@
-import re
-
-from nodes.state_agent import AgentState
 from langchain.chat_models import ChatOpenAI
+from nodes.state_agent import AgentState
 
 llm = ChatOpenAI(model="gpt-4.1-mini-2025-04-14", temperature=0.2)
+
 
 def examiner_node(state: AgentState) -> AgentState:
     prompt = (
@@ -19,6 +18,8 @@ def examiner_node(state: AgentState) -> AgentState:
     print(f"Examiner response: {response_content}")
     if "correct" in response_content.lower():
         state.decision = "correct"
+        state.current_state = "examined and its correct"
     else:
         state.decision = "planner"
+        state.current_state = "examined and its not correct"
     return state
