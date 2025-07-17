@@ -6,6 +6,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Optional
 
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
 from agent_builder import graph
 from fastapi import FastAPI, HTTPException
 from nodes.state_agent import AgentState, ConversationEntry

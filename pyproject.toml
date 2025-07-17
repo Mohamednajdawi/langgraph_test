@@ -23,4 +23,5 @@ dependencies = [
     "langchain-openai>=0.3.28",
     "ipython>=9.4.0",
     "ipykernel>=6.29.5",
+    "python-dotenv>=1.0.0",
 ]
